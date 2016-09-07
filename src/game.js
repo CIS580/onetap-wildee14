@@ -9,22 +9,24 @@ export class Game {
    * @param {function} updateFunction function to update the game
    * @param {function} renderFunction function to render the game
    */
-  constructor(screen, updateFunction, renderFunction) {
-    this.update = updateFunction;
-    this.render = renderFunction;
+export function init(screen, updateFunction, renderFunction) {
+     update = updateFunction;
+     render = renderFunction;
 
     // Set up buffers
-    this.frontBuffer = screen;
-    this.frontCtx = screen.getContext('2d');
-    this.backBuffer = document.createElement('canvas');
-    this.backBuffer.width = screen.width;
-    this.backBuffer.height = screen.height;
-    this.backCtx = this.backBuffer.getContext('2d');
+export function update(screen, updateFunction, render) {
+
+    frontBuffer = screen;
+    frontCtx = screen.getContext('2d');
+    backBuffer = document.createElement('canvas');
+    backBuffer.width = screen.width;
+    backBuffer.height = screen.height;
+    backCtx = backBuffer.getContext('2d');
 
     // Start the game loop
-    this.oldTime = performance.now();
-    this.paused = false;
-    window.requestAnimationFrame(this.loop);
+     oldTime = performance.now();
+     paused = false;
+    window.requestAnimationFrame( loop);
   }
 
   /**
@@ -32,8 +34,8 @@ export class Game {
    * Pause or unpause the game
    * @param {bool} pause true to pause, false to start
    */
-  pause(flag) {
-    this.paused = (flag == true);
+export  pause(flag) {
+     paused = (flag == true);
   }
 
   /**
@@ -42,17 +44,17 @@ export class Game {
    * @param{time} the current time as a DOMHighResTimeStamp
    */
   loop(newTime) {
-    var elapsedTime = newTime - this.oldTime;
-    this.oldTime = newTime;
+    var elapsedTime = newTime - oldTime;
+    oldTime = newTime;
 
-    if(!this.paused) this.update(elapsedTime);
-    this.render(elapsedTime, this.frontCtx);
+    if(!paused)  update(elapsedTime);
+     render(elapsedTime,  frontCtx);
 
     // Flip the back buffer
     frontCtx.drawImage(backBuffer, 0, 0);
 
     // Run the next loop
-    window.requestAnimationFrame(this.loop);
+    window.requestAnimationFrame( loop);
   }
 
 }
